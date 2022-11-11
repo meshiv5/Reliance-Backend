@@ -11,7 +11,7 @@ router.get("/", auth, async (req, res) => {
 
 router.post("/", auth, async (req, res) => {
   const { error } = validateCart(req.body);
-  if (error) res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send(error.details[0].message);
   const isExist = await cartService.findCart({ User: req.user._id, itemId: req.body.itemId });
   if (isExist) {
     const cart = await cartService.updateCart({ User: req.user._id }, { quantity: isExist.quantity + req.body.quantity });
@@ -25,7 +25,7 @@ router.post("/", auth, async (req, res) => {
 
 router.put("/", auth, async (req, res) => {
   const { error } = validateCart(req.body);
-  if (error) res.status(400).send(error.details[0].message);
+  if (error) return res.status(400).send(error.details[0].message);
   const isExist = await cartService.findCart({ User: req.user._id, itemId: req.body.itemId });
   if (isExist) {
     const cart = await cartService.updateCart({ User: req.user._id }, { quantity: req.body.quantity });
