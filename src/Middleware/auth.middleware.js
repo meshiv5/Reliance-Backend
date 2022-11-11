@@ -4,6 +4,9 @@ const auth = (req, res, next) => {
   if (!token) return res.status(401).send("Access denied. No token provided.");
   try {
     const decoded = jwt.verify(token, process.env.privateKey);
+    if (!decoded._id) {
+      throw "myException";
+    }
     req.user = decoded;
     next();
   } catch (ex) {
