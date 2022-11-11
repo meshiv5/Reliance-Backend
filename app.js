@@ -11,7 +11,7 @@ const mediaRouter = require("./src/Routes/Media/media.routes");
 const cartRouter = require("./src/Routes/Cart/cart.routes");
 const { connect } = require("./src/Config/db.config");
 
-const PORT = process.env.SERVER_PORT;
+const PORT = process.env.PORT;
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -23,7 +23,7 @@ app.use("/api/cart", cartRouter);
 app.get("/", (req, res) => {
   res.send(`<h1>API Works !!!</h1>`);
 });
-app.listen(PORT, async () => {
+app.listen(PORT || 9000, async () => {
   await connect();
   console.log(`Server Started Listening On PORT ${PORT}`);
 });
